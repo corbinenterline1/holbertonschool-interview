@@ -2,6 +2,8 @@
 '''
 Calculates the minimum number of operations to reach n.
 '''
+
+
 def minOperations(n):
     '''
     Copy pasta
@@ -18,3 +20,4 @@ def minOperations(n):
             i += bucket
         count += 1
     return count
+    
