@@ -20,4 +20,3 @@ def minOperations(n):
             i += bucket
         count += 1
     return count
-    
