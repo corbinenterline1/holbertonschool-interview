@@ -53,5 +53,5 @@ listint_t *reversal(listint_t *head)
 		prevNode = current;
 		current = nextNode;
 	}
-	return (revNode);
+	return (prevNode);
 }
