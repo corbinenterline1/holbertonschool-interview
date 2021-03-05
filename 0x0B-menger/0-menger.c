@@ -7,9 +7,9 @@
  */
 void menger(int level)
 {
-	int i = 0, j = 0, o = 1;
+	int i, j, o;
 	int size = pow(3, level);
-	char conprin;
+	char print;
 
 	if (level == 0)
 		printf("#\n");
@@ -17,19 +17,17 @@ void menger(int level)
 		printf("###\n# #\n###\n");
 	if (level > 1)
 	{
-		for (; i < size; i++)
+		for (i = 0; i < size; i++)
 		{
-			for (; j < size; j++)
+			for (j = 0; j < size; j++)
 			{
-				conprin = '#';
+				print = '#';
 				for (o = 1; o < size; o *= 3)
 				{
 					if ((i / o) % 3 == 1 && (j / o) % 3 == 1)
-					{
-						conprin = ' ';
-					}
+						print = ' ';
 				}
-				printf("%c", conprin);
+				printf("%c", print);
 			}
 			printf("\n");
 		}
