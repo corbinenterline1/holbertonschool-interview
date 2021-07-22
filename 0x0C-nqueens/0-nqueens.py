@@ -6,6 +6,7 @@ placing N non-attacking queens on an NN chessboard.
 
 import sys
 
+
 def board_set_up(N):
     """
     """
