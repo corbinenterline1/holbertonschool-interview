@@ -3,87 +3,60 @@
 The N queens puzzle is the challenge of
 placing N non-attacking queens on an NN chessboard.
 """
-
 import sys
 
 
-def board_set_up(N):
+def valid_position(i, j):
     """
+    Checks if position is valid
     """
-    matrix = []
-    for row in range(N):
-        matrix_row = []
-        for column in range(N):
-            matrix_row.append(0)
-        matrix.append(matrix_row)
-    return (matrix)
+    for q in range(0, N):
+        if board[i][q] == 1 or board[q][j] == 1:
+            return True
+    for q in range(0, N):
+        for diag in range(0, N):
+            if (q + diag == i + j) or (q - diag == i - j):
+                if board[q][diag] == 1:
+                    return True
+    return False
 
 
-def print_solution(matrix):
+def nqueen(n, start):
     """
+    Solves the N queens problem. N >= 4
     """
-    queens_coordinates = []
-    for i, row in enumerate(matrix):
-        for j, column in enumerate(row):
-            if column == 1:
-                queen = []
-                queen.append(i)
-                queen.append(j)
-                queens_coordinates.append(queen)
-    print(queens_coordinates)
-
-
-def is_safe(matrix, new_row, new_column):
-    """
-    """
-    # checks row up to column (left side of row)
-    for i in range(new_column):
-        if matrix[new_row][i]:
-            return False
-    # checks upper diagonal
-    for i, j in zip(range(new_row, -1, -1),
-                    range(new_column, -1, -1)):
-        if matrix[i][j]:
-            return False
-    N = len(matrix)
-    # checks lower diagonal
-    for i, j in zip(range(new_row, N, 1),
-                    range(new_column, -1, -1)):
-        if matrix[i][j]:
-            return False
-    return True
-
-
-def solve(matrix, new_column):
-    """
-    """
-    N = len(matrix)
-    # base case: all queens are placed
-    if new_column >= N:
-        print_solution(matrix)
-        return matrix
-    for new_row in range(N):
-        if is_safe(matrix, new_row, new_column):
-            matrix[new_row][new_column] = 1
-            # call to recursively try to solve rest of queens
-            solve(matrix, new_column + 1)
-            # if can't solve with this position, re-set as 0
-            matrix[new_row][new_column] = 0
-    return None
-
+    if n == 0:
+        return True
+    for i in range(0, N):
+        if i > 0:
+            start = 0
+        for j in range(start, N):
+            if (not(valid_position(i, j))) and (board[i][j] != 1):
+                board[i][j] = 1
+                if nqueen(n - 1, start):
+                    return True
+                board[i][j] = 0
+    return False
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
         print("Usage: nqueens N")
         exit(1)
-    N = sys.argv[1]
     try:
-        N = int(N)
-    except Exception as e:
+        N = int(sys.argv[1])
+    except:
         print("N must be a number")
         exit(1)
     if N < 4:
         print("N must be at least 4")
         exit(1)
-    matrix = board_set_up(N)
-    solve(matrix, 0)
+    for i in range(0, N):
+        board = [[0] * N for _ in range(N)]
+        nqueen(N, i)
+        solution = []
+        for row in range(0, N):
+            for col in range(0, N):
+                if board[row][col] == 1:
+                    solution.append([row, col])
+        if solution[0][1] == i:
+            print(solution)
