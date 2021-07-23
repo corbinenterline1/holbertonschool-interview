@@ -3,12 +3,12 @@
 #include "binary_trees.h"
 
 /**
- * len_nodes - count nodes
+ * count_nodes - count nodes
  * @root: double pointer
  *
  * Return: number of nodes
  */
-int len_nodes(heap_t *root)
+int count_nodes(heap_t *root)
 {
 	int n;
 
@@ -16,26 +16,26 @@ int len_nodes(heap_t *root)
 		return (0);
 	if (root)
 		n = 1;
-	n += len_nodes(root->left);
-	n += len_nodes(root->right);
+	n += count_nodes(root->left);
+	n += count_nodes(root->right);
 
 	return (n);
 }
 
 /**
- * check - function that checks tree
+ * tree_confirm - function that checks tree
  * @tree: pointer to the root
  * Return: 1 or 0 based on result
  */
 
-int check(const heap_t *tree)
+int tree_confirm(const heap_t *tree)
 {
 	int p1, p2;
 
 	if (tree == NULL)
 		return (0);
-	p1 = len_nodes(tree->left);
-	p2 = len_nodes(tree->right);
+	p1 = count_nodes(tree->left);
+	p2 = count_nodes(tree->right);
 	if (p1 == p2)
 		return (1);
 	return (0);
@@ -56,10 +56,10 @@ heap_t *parent(heap_t *root)
 		return (NULL);
 
 	p = root;
-	l = len_nodes(p->left);
-	r = len_nodes(p->right);
-	lf = check(p->left);
-	rf = check(p->right);
+	l = count_nodes(p->left);
+	r = count_nodes(p->right);
+	lf = tree_confirm(p->left);
+	rf = tree_confirm(p->right);
 
 	if (!l || !r)
 		return (p);
@@ -71,8 +71,8 @@ heap_t *parent(heap_t *root)
 }
 
 /**
- * sort - sort a child and a parent node
- * @new: inserted node
+ * sort - Sorts the parent and child nodes
+ * @new: The new node to be inserted
  *
  * Return: nothing
  */
@@ -95,9 +95,9 @@ void sort(heap_t **new)
 	}
 }
 /**
- * heap_insert - inserts a value into Heap
- * @root: double pointer
- * @value: value
+ * heap_insert - Inserts a value into a Max Binary Heap
+ * @root: Double pointer to the root node of the heap
+ * @value: Value to store in the node to be inserted
  *
  * Return: a pointer to the new node
  */
