@@ -5,8 +5,8 @@
 /**
  * sorted_array_to_avl - Convert a sorted array to an AVL tree.
  *
- * @array - Array, aka tree fodder.
- * @size - Size of the array.
+ * @array: Array, aka tree fodder.
+ * @size: Size of the array.
  *
  * Return: Pointer to the root node, or NULL.
  */
@@ -31,10 +31,10 @@ avl_t *sorted_array_to_avl(int *array, size_t size)
 /**
  * build_a_branch - Builds a tree branch
  *
- * @begin - Beginning of the branch
- * @end - End of the branch
- * @array - Tree fertilizer
- * @branch - Branch of the tree
+ * @begin: Beginning of the branch
+ * @end: End of the branch
+ * @array: Tree fertilizer
+ * @branch: Branch of the tree
  *
  * Return: Node
  */
