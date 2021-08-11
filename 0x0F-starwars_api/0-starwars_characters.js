@@ -6,10 +6,10 @@ const url = 'https://swapi-api.hbtn.io/api/films/' + process.argv[2];
 const asyncGetChar = async function (url) {
   return new Promise(function (resolve, reject) {
     request(url, function (error, response, body) {
-      if (!error && response.statusCode == 200) {
-	resolve(body);
+      if (!error && response.statusCode === 200) {
+        resolve(body);
       } else {
-	reject(error);
+        reject(error);
       }
     });
   });
