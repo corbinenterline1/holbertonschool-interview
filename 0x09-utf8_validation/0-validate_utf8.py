@@ -12,10 +12,10 @@ def validUTF8(data):
         return False
     byte_return = []
     for item in data:
-        byte_return.append(item.to_bytes(2, 'big'))
-    byte_test = b''.join(byte_return)
-    try:
-        byte_test.decode('utf-8', 'strict')
-    except UnicodeDecodeError:
-        return False
+        byte_test = item.to_bytes(2, 'big')
+        try:
+            byte_test.decode('utf-8')
+        except UnicodeDecodeError:
+            return False
+        byte_test = None
     return True
