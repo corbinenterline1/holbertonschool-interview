@@ -9,12 +9,13 @@
  */
 int advanced_binary(int *array, size_t size, int value)
 {
+	if (array == NULL || size == 0 || value < array[0])
+		return (-1);
+
 	int high = size - 1;
 	int index;
 	int low = 0;
 
-	if (value < array[0] || array == NULL)
-		return (-1);
 	index = recursive_binary(array, low, high, value);
 	return (index);
 }
