@@ -1,83 +1,89 @@
 #include "binary_trees.h"
 
 /**
- * heap_extract - extracts the root node of a Max Binary Heap
- * @root: the root node of the heap
- *
- * Return: value of the root node, 0 upon failure
- **/
+  * heap_extract - extract the root node of a max binary heap
+  * @root: double pointer to root node of heap
+  *
+  * Return: value stored in node, 0 on fail
+  */
 int heap_extract(heap_t **root)
 {
-	int res, height;
-	heap_t *last;
+	int value, height;
+	heap_t *top;
 
-	if (root == NULL)
+	if (root == NULL || (*root) == NULL)
 		return (0);
-
-	if (*root == NULL)
-		return (0);
-
-	res = (*root)->n;
-	height = check_height(*root, 1);
-
-	if (height == 1)
-	{
-		last = *root;
+	top = *root;
+	value = top->n;
+	if (top->left == NULL && top->right == NULL)
 		*root = NULL;
-	}
 	else
 	{
-		last = get_last(*root, height, 1);
-
-		(*root)->n = last->n;
-
-		if (last->parent->right == last)
-			last->parent->right = NULL;
+		height = height_finder(*root, 1);
+		top = tree_top(*root, height, 1);
+		(*root)->n = top->n;
+		if (top->parent->right == top)
+			top->parent->right = NULL;
 		else
-			last->parent->left = NULL;
-
-		heapify(*root);
+			top->parent->left = NULL;
+		node_handler(*root);
 	}
-
-	free(last);
-
-	return (res);
+	free(top);
+	return (value);
 }
 
 /**
- * check_height - calculates the height of the heap
- * @node: node to start from
- * @height: known height of start
- *
- * Return: calculated height
- **/
-int check_height(heap_t *node, int height)
+  * node_handler - Handles the node in the heap.
+  * @node: Starting node.
+  */
+void node_handler(heap_t *node)
 {
-	int l, r;
+	int tmp;
+	heap_t *max = node;
+
+	if (node->left != NULL && node->left->n > max->n)
+		max = node->left;
+	if (node->right != NULL && node->right->n > max->n)
+		max = node->right;
+	if (max != node)
+	{
+		tmp = node->n;
+		node->n = max->n;
+		max->n = tmp;
+		node_handler(max);
+	}
+}
+
+/**
+  * height_finder - Returns the height of the tree.
+  * @node: Starting node.
+  * @height: Height of starting node.
+  *
+  * Return: Height of the heap.
+  */
+int height_finder(heap_t *node, int height)
+{
+	int left, right;
 
 	if (node == NULL)
 		return (height - 1);
-
 	height++;
-
-	l = check_height(node->left, height);
-	r = check_height(node->right, height);
-
-	if (l > r)
-		return (l);
-	else
-		return (r);
+	left = height_finder(node->left, height);
+	right = height_finder(node->right, height);
+	if (left > right)
+		return (left);
+	return (right);
 }
 
 /**
- * get_last - returns the last node using level order
- * @node: node to start from
- * @height: height of the heap
- * @node_height: known height of the starting node
- *
- * Return: last node in the heap
- **/
-heap_t *get_last(heap_t *node, int height, int node_height)
+  * tree_top - Returns a new top node.
+  * @node: Starting node.
+  * @height: Height of heap.
+  * @node_height: Height of starting node.
+  *
+  * Return: New top node.
+  */
+heap_t *tree_top(heap_t *node, int height, int node_height)
 {
 	heap_t *tmp;
 
@@ -85,43 +91,10 @@ heap_t *get_last(heap_t *node, int height, int node_height)
 	{
 		if (node->right != NULL)
 			return (node->right);
-		else
-			return (node->left);
+		return (node->left);
 	}
-
-	tmp = get_last(node->right, height, node_height + 1);
-
+	tmp = tree_top(node->right, height, node_height + 1);
 	if (tmp != NULL)
 		return (tmp);
-
-	return (get_last(node->left, height, node_height + 1));
-}
-
-/**
- * heapify - heapifies a heap
- * @node: node to start from
- **/
-void heapify(heap_t *node)
-{
-	int tmp;
-	heap_t *max = node;
-
-	if (node->left != NULL && node->left->n >= max->n)
-		max = node->left;
-
-	if (node->right != NULL)
-	{
-		if (max == node->left && node->right->n > max->n)
-			max = node->right;
-		else if (node->right->n >= max->n)
-			max = node->right;
-	}
-
-	if (max != node)
-	{
-		tmp = node->n;
-		node->n = max->n;
-		max->n = tmp;
-		heapify(max);
-	}
+	return (tree_top(node->left, height, node_height + 1));
 }
