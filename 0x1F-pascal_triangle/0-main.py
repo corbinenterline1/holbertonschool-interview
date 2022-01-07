@@ -9,7 +9,8 @@ def print_triangle(triangle):
     Print the triangle
     """
     for row in triangle:
-        print("[{}]".format(",".join([str(x) for x in row])))
+        for i in row:
+            print("[{}]".format(",".join([str(x) for x in row])))
 
 
 if __name__ == "__main__":

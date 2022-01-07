@@ -1,12 +1,22 @@
-# Python3 program for Pascal's Triangle 
-# A O(n^2) time and O(1) extra 
-# space method for Pascal's Triangle 
+#!/usr/bin/python3
+from array import *
 
-# Pascal function 
+"""
+Pascal function
+"""
 def pascal_triangle(n):
+    """
+    Creates a pascal triangle
+    """
+    a = []
+    new = []
     for line in range(1, n + 1):
         C = 1; # used to represent C(line, i)
         for i in range(1, line + 1):
-            # The first value in a
-            # line is always 1
-            C = int(C * (line - i) / i);
+            # Lines start with 1
+            new.append(C)
+            # print(C, end= " ")
+            C = int(C * (line - i) / i)
+        a.append(new)
+        new = []
+        # print(new)
