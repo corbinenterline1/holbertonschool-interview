@@ -10,7 +10,7 @@ def pascal_triangle(n):
     a = []
     new = []
     for line in range(1, n + 1):
-        C = 1; # used to represent C(line, i)
+        C = 1 # used to represent C(line, i)
         for i in range(1, line + 1):
             # Lines start with 1
             new.append(C)
