@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-from array import *
 
 """
 Pascal function
