@@ -18,7 +18,7 @@ def isWinner(x, nums):
     for i in range(len(screen)):
         if screen[i]:
             count += 1
-        fltr[i] = count
+        screen[i] = count
     p1 = 0
     for n in nums:
         p1 += screen[n] % 2 == 1
